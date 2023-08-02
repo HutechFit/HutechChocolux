@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hutech.Presentation", "Hutech.Presentation\Hutech.Presentation.csproj", "{7E2454F2-0A0A-4295-9ED3-8DB38155C81C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hutech.Presentation", "Hutech.Presentation\Hutech.Presentation.csproj", "{7E2454F2-0A0A-4295-9ED3-8DB38155C81C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hutech.Domain", "Hutech.Domain\Hutech.Domain.csproj", "{9AF5EE4E-791E-41E5-9FDC-2FD3E82FC63C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hutech.Domain", "Hutech.Domain\Hutech.Domain.csproj", "{9AF5EE4E-791E-41E5-9FDC-2FD3E82FC63C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hutech.Infrastructure", "Hutech.Infrastructure\Hutech.Infrastructure.csproj", "{82A86A5C-2ECF-41A2-BC0B-00BC37AF6CFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hutech.Infrastructure", "Hutech.Infrastructure\Hutech.Infrastructure.csproj", "{82A86A5C-2ECF-41A2-BC0B-00BC37AF6CFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hutech.Application", "Hutech.Application\Hutech.Application.csproj", "{92EB87C5-5ECF-4E24-89D9-D46A997FE018}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hutech.Application", "Hutech.Application\Hutech.Application.csproj", "{92EB87C5-5ECF-4E24-89D9-D46A997FE018}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

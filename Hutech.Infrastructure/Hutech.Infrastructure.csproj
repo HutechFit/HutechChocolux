@@ -10,4 +10,9 @@
     <ProjectReference Include="..\Hutech.Domain\Hutech.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Identity\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
