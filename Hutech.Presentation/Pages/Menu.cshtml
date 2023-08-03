@@ -5,114 +5,131 @@
 }
 
 <section class="chocolate_section layout_padding">
-    <div class="container">
-        <div class="heading_container">
-            <h2>
-                Our chocolate products
-            </h2>
-            <p>
-                We have a variety of chocolate products with different flavors. We are committed to bringing you the best quality products.
-            </p>
-        </div>
-    </div>
-    <div class="container">
-        <div class="chocolate_container">
-            <div class="box">
-                <div class="img-box">
-                    <img src="images/chocolate1.png" alt="">
-                </div>
-                <div class="detail-box">
-                    <h6>
-                        Yummy <span>chocolate</span>
-                    </h6>
-                    <h5>
-                        $5.0
-                    </h5>
-                    <a href="">
-                        BUY NOW
-                    </a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="img-box">
-                    <img src="images/chocolate2.png" alt="">
-                </div>
-                <div class="detail-box">
-                    <h6>
-                        Yummy <span>chocolate</span>
-                    </h6>
-                    <h5>
-                        $5.0
-                    </h5>
-                    <a href="">
-                        BUY NOW
-                    </a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="img-box">
-                    <img src="images/chocolate3.png" alt="">
-                </div>
-                <div class="detail-box">
-                    <h6>
-                        Yummy <span>chocolate</span>
-                    </h6>
-                    <h5>
-                        $5.0
-                    </h5>
-                    <a href="">
-                        BUY NOW
-                    </a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="img-box">
-                    <img src="images/chocolate1.png" alt="">
-                </div>
-                <div class="detail-box">
-                    <h6>
-                        Yummy <span>chocolate</span>
-                    </h6>
-                    <h5>
-                        $5.0
-                    </h5>
-                    <a href="">
-                        BUY NOW
-                    </a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="img-box">
-                    <img src="images/chocolate2.png" alt="">
-                </div>
-                <div class="detail-box">
-                    <h6>
-                        Yummy <span>chocolate</span>
-                    </h6>
-                    <h5>
-                        $5.0
-                    </h5>
-                    <a href="">
-                        BUY NOW
-                    </a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="img-box">
-                    <img src="images/chocolate3.png" alt="">
-                </div>
-                <div class="detail-box">
-                    <h6>
-                        Yummy <span>chocolate</span>
-                    </h6>
-                    <h5>
-                        $5.0
-                    </h5>
-                    <a href="">
-                        BUY NOW
-                    </a>
-                </div>
+    @if (ViewData["Data"] is null)
+    {
+        <div class="container">
+            <div class="heading_container">
+                <h2 class="text-danger">
+                    Sorry for the inconvenience
+                </h2>
+                <p>
+                    We don't have any chocolate products at the moment. Please come back later.
+                </p>
+                <a class="btn bg-dark text-white" href="/" role="button">Back to Homepage</a>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="heading_container">
+                <h2>
+                    Our chocolate products
+                </h2>
+                <p>
+                    We have a variety of chocolate products with different flavors. We are committed to bringing you the best quality products.
+                </p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="chocolate_container">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="images/chocolate1.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h6>
+                            Yummy <span>chocolate</span>
+                        </h6>
+                        <h5>
+                            $5.0
+                        </h5>
+                        <a href="">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img-box">
+                        <img src="images/chocolate2.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h6>
+                            Yummy <span>chocolate</span>
+                        </h6>
+                        <h5>
+                            $5.0
+                        </h5>
+                        <a href="">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img-box">
+                        <img src="images/chocolate3.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h6>
+                            Yummy <span>chocolate</span>
+                        </h6>
+                        <h5>
+                            $5.0
+                        </h5>
+                        <a href="">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img-box">
+                        <img src="images/chocolate1.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h6>
+                            Yummy <span>chocolate</span>
+                        </h6>
+                        <h5>
+                            $5.0
+                        </h5>
+                        <a href="">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img-box">
+                        <img src="images/chocolate2.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h6>
+                            Yummy <span>chocolate</span>
+                        </h6>
+                        <h5>
+                            $5.0
+                        </h5>
+                        <a href="">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img-box">
+                        <img src="images/chocolate3.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h6>
+                            Yummy <span>chocolate</span>
+                        </h6>
+                        <h5>
+                            $5.0
+                        </h5>
+                        <a href="">
+                            BUY NOW
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </section>

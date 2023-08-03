@@ -6,5 +6,6 @@ public class MenuModel : PageModel
 {
     public void OnGet()
     {
+        ViewData["Data"] = null;
     }
 }
