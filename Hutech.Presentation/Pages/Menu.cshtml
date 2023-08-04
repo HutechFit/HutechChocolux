@@ -1,16 +1,18 @@
 ﻿@page
+@using Hutech.Application.Models
+@using Microsoft.IdentityModel.Tokens
 @model MenuModel
 @{
     ViewData["Title"] = "Menu";
 }
 
 <section class="chocolate_section layout_padding">
-    @if (ViewData["Data"] is null)
+    @if (ViewData["Products"] is null)
     {
         <div class="container">
             <div class="heading_container">
                 <h2 class="text-danger">
-                    Sorry for the inconvenience
+                    Sorry
                 </h2>
                 <p>
                     We don't have any chocolate products at the moment. Please come back later.
@@ -33,102 +35,39 @@
         </div>
         <div class="container">
             <div class="chocolate_container">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/chocolate1.png" alt="">
+                @foreach (var products in (ViewData["Products"] as List<ProductVm>)!)
+                {
+                    <div class="box">
+                        <div class="img-box">
+                            @if(products.Image.IsNullOrEmpty())
+                            {
+                                <img loading="lazy" src="https://fakeimg.pl/100x100?text=No+image" alt="Unknown image">
+                            }
+                            else
+                            {
+                                <img loading="lazy" src="@products.Image" alt="@products.Name">
+                            }
+                        </div>
+                        <div class="detail-box">
+                            <h6>
+                                @products.Name <span>Chocolate</span>
+                            </h6>
+                            <h5>
+                                @if(products.Price == 0)
+                                {
+                                    <span class="text-info">Fee</span>
+                                }
+                                else
+                                {
+                                    @products.Price
+                                }
+                            </h5>
+                            <a href="">
+                                BUY NOW
+                            </a>
+                        </div>
                     </div>
-                    <div class="detail-box">
-                        <h6>
-                            Yummy <span>chocolate</span>
-                        </h6>
-                        <h5>
-                            $5.0
-                        </h5>
-                        <a href="">
-                            BUY NOW
-                        </a>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/chocolate2.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                            Yummy <span>chocolate</span>
-                        </h6>
-                        <h5>
-                            $5.0
-                        </h5>
-                        <a href="">
-                            BUY NOW
-                        </a>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/chocolate3.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                            Yummy <span>chocolate</span>
-                        </h6>
-                        <h5>
-                            $5.0
-                        </h5>
-                        <a href="">
-                            BUY NOW
-                        </a>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/chocolate1.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                            Yummy <span>chocolate</span>
-                        </h6>
-                        <h5>
-                            $5.0
-                        </h5>
-                        <a href="">
-                            BUY NOW
-                        </a>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/chocolate2.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                            Yummy <span>chocolate</span>
-                        </h6>
-                        <h5>
-                            $5.0
-                        </h5>
-                        <a href="">
-                            BUY NOW
-                        </a>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/chocolate3.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                            Yummy <span>chocolate</span>
-                        </h6>
-                        <h5>
-                            $5.0
-                        </h5>
-                        <a href="">
-                            BUY NOW
-                        </a>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     }

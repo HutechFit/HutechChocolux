@@ -1,11 +1,15 @@
-﻿using Hutech.Infrastructure.Identity;
+﻿using Hutech.Domain.Entities;
+using Hutech.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hutech.Infrastructure;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
+    public DbSet<Product>? Products { get; set; }
+    public DbSet<Category>? Categories { get; set; }
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }

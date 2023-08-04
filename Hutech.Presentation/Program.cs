@@ -1,6 +1,23 @@
+using Hutech.Application.Services;
+using Hutech.Domain.Interfaces;
+using Hutech.Infrastructure;
+using Hutech.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseModel(Hutech.Infrastructure.CompiledModels.ApplicationDbContextModel.Instance);
+});
 
 var app = builder.Build();
 

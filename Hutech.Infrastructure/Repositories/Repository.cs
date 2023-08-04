@@ -1,15 +1,16 @@
 ﻿using System.Linq.Expressions;
+using Hutech.Domain.Interfaces;
 using Hutech.Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hutech.Infrastructure.Repositories;
 
-public abstract class BaseRepository<T> where T : class
+public class Repository<T> : IRepository<T> where T : class
 {
     private readonly ApplicationDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    protected BaseRepository(ApplicationDbContext context) 
+    public Repository(ApplicationDbContext context) 
         => (_context, _dbSet) = (context, context.Set<T>());
 
     public virtual IEnumerable<T> GetAll() => _dbSet.AsNoTracking();
