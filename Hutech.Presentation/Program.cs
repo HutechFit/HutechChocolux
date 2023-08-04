@@ -14,17 +14,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    options.UseModel(Hutech.Infrastructure.CompiledModels.ApplicationDbContextModel.Instance);
-});
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .UseModel(Hutech.Infrastructure.CompiledModels.ApplicationDbContextModel.Instance)
+    );
 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    app.UseExceptionHandler("/Error")
+        .UseHsts();
 }
 
 app.UseHttpsRedirection();

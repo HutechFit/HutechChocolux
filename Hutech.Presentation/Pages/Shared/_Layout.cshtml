@@ -25,26 +25,26 @@
         <header class="header_section">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" asp-page="Index">
                         Hutech Chocolux
                     </a>
                     <div class="collapse navbar-collapse " id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">Home</a>
+                                <a class="nav-link" asp-page="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Menu">Menu</a>
+                                <a class="nav-link" asp-page="Menu">Menu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Cart">Cart</a>
+                                <a class="nav-link" asp-page="Cart">Cart</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Management">Management</a>
+                                <a class="nav-link" asp-page="Management">Management</a>
                             </li>
                         </ul>
                         <div class="quote_btn-container">
-                            <a href="User">
+                            <a asp-page="User">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -54,8 +54,8 @@
         </header>
         @if (ReferenceEquals(ViewData["Title"], "Homepage"))
         {
-            <section class="slider_section ">
-                <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+            <section class="slider_section">
+                <div id="customCarousel1">
                     <div class="container">
                         <div class="col-md-6">
                             <div class="detail_box">
@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-4 ml-auto">
                             <div class="img-box">
-                                <img loading="lazy" src="images/slider-img.png" alt="">
+                                <img loading="lazy" src="images/slider-img.png" alt="slider">
                             </div>
                         </div>
                     </div>
@@ -87,10 +87,10 @@
                             Menu
                         </h4>
                         <div class="info_links_menu">
-                            <a href="/">Home</a>
-                            <a href="Menu">Menu</a>
-                            <a href="Cart">Cart</a>
-                            <a href="Management">Management</a>
+                            <a asp-page="Index">Home</a>
+                            <a asp-page="Menu">Menu</a>
+                            <a asp-page="Cart">Cart</a>
+                            <a asp-page="Management">Management</a>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ public record ProductResponse(
     int Status, 
     string Description, 
     string Image,
-    int CategoryId);
+    string Category);
 
 public record ProductRequest(
     string Name,

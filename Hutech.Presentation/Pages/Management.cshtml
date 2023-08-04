@@ -1,0 +1,128 @@
+﻿@page
+@using Hutech.Application.Models
+@using Hutech.Domain.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.IdentityModel.Tokens
+@model ManagementModel
+@{
+    ViewData["Title"] = "Management";
+}
+
+<section class="chocolate_section layout_padding table-responsive">
+    @if (ViewData["Products"] is null)
+    {
+        <div class="container">
+            <div class="heading_container">
+                <h2 class="text-danger">
+                    Caution
+                </h2>
+                <p>
+                    There are no chocolate products in the database. Please add some products.
+                </p>
+                <a class="btn bg-dark text-white"
+                   asp-page="Index"
+                   role="button">Back to Homepage</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <nav class="navbar navbar-light">
+                <form class="d-flex" method="get"
+                      asp-page-handler="Search"
+                      asp-antiforgery="true">
+                    <input class="form-control me-2"
+                           type="search"
+                           placeholder="Search by name..."
+                           aria-label="Search"
+                           name="keyword">
+                    <button class="btn btn-success" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </nav>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">
+                    <a asp-page="Management"
+                       asp-route-sortOrder="@ViewData["IdSortParam"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        #
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="Management"
+                       asp-route-sortOrder="@ViewData["NameSortParam"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        Name
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="Management"
+                       asp-route-sortOrder="@ViewData["PriceSortParam"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        Price
+                    </a>
+                </th>
+                <th scope="col">Image</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var product in (ViewData["Products"] as List<ProductResponse>)!)
+            {
+                <tr>
+                    <th scope="row">@product.Id</th>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("C2")</td>
+                    <td>
+                        @if (product.Image.IsNullOrEmpty())
+                        {
+                            <img loading="lazy" src="https://fakeimg.pl/100x100?text=No+image" alt="Unknown image">
+                        }
+                        else
+                        {
+                            <img loading="lazy" src="@product.Image" alt="@product.Name">
+                        }
+                    </td>
+                    <td>
+                        @if (product.Description.IsNullOrEmpty())
+                        {
+                            <span class="text-info">No description</span>
+                        }
+                        else
+                        {
+                            <span>@product.Description</span>
+                        }
+                    </td>
+                    <td>@product.Category</td>
+                    <td>
+                        <a asp-page="Edit"
+                           asp-route-id="@product.Id"
+                           class="btn btn-info">
+                            Edit
+                        </a>
+                        <a asp-page="Delete"
+                           asp-route-id="@product.Id"
+                           class="btn btn-danger"
+                           onclick="return confirm('Are you sure you want to delete this product?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a asp-page="Create"
+               class="btn btn-primary">
+                Add new product
+            </a>
+        </div>
+    }
+</section>

@@ -13,7 +13,9 @@ namespace Hutech.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230804101314_update image field")]
+#pragma warning disable CS8981
     partial class updateimagefield
+#pragma warning restore CS8981
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
