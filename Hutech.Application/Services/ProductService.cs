@@ -1,4 +1,5 @@
-﻿using Hutech.Domain.Entities;
+﻿using Hutech.Application.Models;
+using Hutech.Domain.Entities;
 using Hutech.Domain.Interfaces;
 
 namespace Hutech.Application.Services;

@@ -1,9 +1,7 @@
 using AutoMapper;
 using Hutech.Application.Models;
 using Hutech.Application.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Hutech.Presentation.Pages;
 
@@ -17,7 +15,7 @@ public class MenuModel : PageModel
 
     public void OnGet()
     {
-        var products = _mapper.Map<IEnumerable<ProductVm>>(_productService.GetAll());
+        var products = _mapper.Map<IEnumerable<ProductResponse>>(_productService.GetAll());
         ViewData["Products"] = products;
     }
 }

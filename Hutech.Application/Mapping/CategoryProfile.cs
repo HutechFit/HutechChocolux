@@ -8,7 +8,10 @@ public class CategoryProfile : Profile
 {
     public CategoryProfile()
     {
-        CreateMap<Category, CategoryVm>()
+        CreateMap<Category, CategoryRequest>()
+            .ReverseMap();
+
+        CreateMap<Category, CategoryResponse>()
             .ReverseMap();
     }
 }
