@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<CategoryService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
