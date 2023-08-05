@@ -21,18 +21,24 @@
                         <span asp-validation-for="ProductRequest.Name"class="text-danger"></span>
                     </div>
                     <div>
-                        <input step="1" min="0" type="number" placeholder="Price" asp-for="ProductRequest.Price" />
+                        <input step="1" min="0" type="number" placeholder="Price" asp-for="ProductRequest.Price"/>
                         <span asp-validation-for="ProductRequest.Price" class="text-danger"></span>
                     </div>
+                    <div class="mb-4">
+                        <select class="w-100" style="height: 50px;" asp-for="ProductRequest.Status">
+                            <option value="1">In stock</option>
+                            <option value="0">Out of stock</option>
+                        </select>
+                    </div>
                     <div>
-                        <input type="file" placeholder="Image" asp-for="ProductRequest.Image" />
+                        <input type="file" placeholder="Image" asp-for="ProductRequest.Image"/>
                         <span asp-validation-for="ProductRequest.Image" class="text-danger"></span>
                     </div>
                     <div>
                         <input type="text"
                                class="message-box"
                                placeholder="Description"
-                               asp-for="ProductRequest.Description" />
+                               asp-for="ProductRequest.Description"/>
                         <span asp-validation-for="ProductRequest.Description" class="text-danger"></span>
                     </div>
                     <div>
@@ -55,5 +61,5 @@
 </section>
 
 @section scripts{
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

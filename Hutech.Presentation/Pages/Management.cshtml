@@ -7,7 +7,7 @@
 }
 
 <section class="chocolate_section layout_padding table-responsive">
-    @if (ViewData["Products"] is null)
+    @if (!Model.Products.ToList().Any())
     {
         <div class="container">
             <div class="heading_container">
@@ -17,9 +17,10 @@
                 <p>
                     There are no chocolate products in the database. Please add some products.
                 </p>
-                <a class="btn bg-dark text-white"
-                   asp-page="Index"
-                   role="button">Back to Homepage</a>
+                <a asp-page="Add"
+                   class="btn btn-primary">
+                    Add new product
+                </a>
             </div>
         </div>
     }

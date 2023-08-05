@@ -56,7 +56,7 @@
                     </div>
                     <div>
                         <select class="w-100" style="height: 50px;" name="CategoryId">
-                            @foreach (var item in (ViewData["Categories"] as List<CategoryResponse>)!)
+                            @foreach (var item in Model.Categories)
                             {
                                 if (item.Id == Model.Product.CategoryId)
                                 {

@@ -2,6 +2,7 @@ using AutoMapper;
 using Hutech.Application.Models;
 using Hutech.Application.Services;
 using Hutech.Domain.Entities;
+using Hutech.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -35,17 +36,20 @@ public class AddModel : PageModel
     public void OnPost()
     {
         if (!ModelState.IsValid)
+            return;
+
+        if (!UploadImage(Request.Form.Files["ProductRequest.Image"], out var fileName))
+            return;
+
+        ProductRequest = ProductRequest with
         {
-            return;
-        }
-
-        if (!UploadImage(Request.Form.Files["Image"], out var fileName))
-        { 
-            ModelState.AddModelError(nameof(ProductRequest.Image), "Invalid image");
-            return;
-        }
-
-        ProductRequest = ProductRequest with { Image = fileName };
+            Image = fileName,
+            Status = ProductRequest.Status switch
+            {
+                0 => Status.InStock,
+                _ => Status.OutOfStock
+            }
+        };
         _productService.Add(_mapper.Map<Product>(ProductRequest));
         Response.Redirect("Management");
     }
@@ -54,11 +58,23 @@ public class AddModel : PageModel
     {
         fileName = string.Empty;
         if (file is null || file.Length == 0)
+        {
+            ModelState.AddModelError("ProductRequest.Image", "Image is required");
             return false;
+        }
 
-        var extension = Path.GetExtension(file.FileName);
-        if (extension is not ".jpg" and not ".png")
+        if (file.Length > 1024 * 1024)
+        {
+            ModelState.AddModelError("ProductRequest.Image", "Image must be less than 1MB");
             return false;
+        }
+        
+        var extension = Path.GetExtension(file.FileName);
+        if (extension is not (".jpg" or ".png"))
+        {
+            ModelState.AddModelError("ProductRequest.Image", "Image must be jpg or png");
+            return false;
+        }
 
         fileName = $"{Guid.NewGuid()}{extension}";
         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);

@@ -18,7 +18,7 @@ public class EditModel : PageModel
     public IEnumerable<CategoryResponse> Categories { get; set; }
 
     [ViewData] 
-    public ProductResponse Product { get; set; } 
+    public ProductResponse? Product { get; set; } 
 
     [BindProperty]
     public ProductRequest ProductRequest { get; set; } =  null!;
@@ -26,17 +26,16 @@ public class EditModel : PageModel
     public EditModel(
         ProductService productService,
         CategoryService categoryService,
-        IMapper mapper, ProductResponse product)
+        IMapper mapper)
     {
         _productService = productService;
         _categoryService = categoryService;
         _mapper = mapper;
-        Product = product;
         Categories = _mapper
             .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll());
     }
 
-    public void OnGet([FromQuery] int id)
+    public void OnGet(int id)
         => Product = _mapper.Map<ProductResponse>(_productService.GetById(id));
 
     public void OnPost()

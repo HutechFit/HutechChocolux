@@ -1,5 +1,4 @@
 ﻿@page
-@using Hutech.Application.Models
 @using Microsoft.IdentityModel.Tokens
 @model MenuModel
 @{
@@ -7,7 +6,7 @@
 }
 
 <section class="chocolate_section layout_padding">
-    @if (ViewData["Products"] is null)
+    @if (!Model.Products.ToList().Any())
     {
         <div class="container">
             <div class="heading_container">
@@ -18,8 +17,7 @@
                     We don't have any chocolate products at the moment. Please come back later.
                 </p>
                 <a class="btn bg-dark text-white"
-                   asp-page="Index"
-                   role="button">
+                   asp-page="Index">
                     Back to Homepage
                 </a>
             </div>
@@ -39,7 +37,7 @@
         </div>
         <div class="container">
             <div class="chocolate_container">
-                @foreach (var products in (ViewData["Products"] as List<ProductResponse>)!)
+                @foreach (var products in Model.Products)
                 {
                     <div class="box">
                         <div class="img-box">
@@ -49,7 +47,7 @@
                             }
                             else
                             {
-                                <img loading="lazy" src="./images/@products.Image" alt="@products.Name">
+                                <img loading="lazy" src="./images/@products.Image" alt="@products.Name" width="100" height="100">
                             }
                         </div>
                         <div class="detail-box">
