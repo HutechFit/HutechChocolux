@@ -1,5 +1,4 @@
 ﻿@page
-@using Hutech.Application.Models
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.IdentityModel.Tokens
 @model EditModel
@@ -35,11 +34,25 @@
                                name="Price"
                                value="@Model.Product.Price"/>
                     </div>
+                    <div class="mb-4">
+                        <select class="w-100" style="height: 50px;" asp-for="ProductRequest.Status">
+                            @if (Model.Product.Status == 0)
+                            {
+                                <option value="0" selected>In stock</option>
+                                <option value="1">Out of stock</option>
+                            }
+                            else
+                            {
+                                <option value="0">In stock</option>
+                                <option value="1" selected>Out of stock</option>
+                            }
+                        </select>
+                    </div>
                     <div>
                         <input type="file"
                                placeholder="Image"
                                name="Image"/>
-                        @if(!Model.Product.Image.IsNullOrEmpty())
+                        @if (!Model.Product.Image.IsNullOrEmpty())
                         {
                             <img src="./images/@Model.Product.Image"
                                  alt="Image"

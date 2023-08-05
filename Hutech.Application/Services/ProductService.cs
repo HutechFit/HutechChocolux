@@ -1,5 +1,6 @@
 ﻿using Hutech.Domain.Entities;
 using Hutech.Domain.Interfaces;
+using Microsoft.Extensions.Primitives;
 
 namespace Hutech.Application.Services;
 

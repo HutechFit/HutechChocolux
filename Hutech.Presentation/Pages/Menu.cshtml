@@ -47,7 +47,11 @@
                             }
                             else
                             {
-                                <img loading="lazy" src="./images/@products.Image" alt="@products.Name" width="100" height="100">
+                                <img loading="lazy"
+                                     src="./images/@products.Image"
+                                     alt="@products.Name"
+                                     width="100"
+                                     height="100">
                             }
                         </div>
                         <div class="detail-box">
@@ -64,9 +68,14 @@
                                     @products.Price.ToString("C2")
                                 }
                             </h5>
-                            <a href="">
-                                BUY NOW
-                            </a>
+                            @if (products.Status == 0)
+                            {
+                                <a href="">BUY NOW</a>
+                            }
+                            else
+                            {
+                                <span class="text-danger">OUT OF STOCK</span>
+                            }
                         </div>
                     </div>
                 }
