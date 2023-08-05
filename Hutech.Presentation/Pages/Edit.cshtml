@@ -1,6 +1,7 @@
 ﻿@page
 @using Hutech.Application.Models
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.IdentityModel.Tokens
 @model EditModel
 @{
     ViewData["Title"] = "Edit";
@@ -38,10 +39,13 @@
                         <input type="file"
                                placeholder="Image"
                                name="Image"/>
-                        <img src="./images/@Model.Product.Image"
-                             alt="Image"
-                             style="width: 100px; height: 100px;"/>
-                        <a href="#" class="btn btn-danger">Delete Image</a>
+                        @if(!Model.Product.Image.IsNullOrEmpty())
+                        {
+                            <img src="./images/@Model.Product.Image"
+                                 alt="Image"
+                                 style="width: 100px; height: 100px;"/>
+                            <a href="#" class="btn btn-danger">Delete Image</a>
+                        }
                     </div>
                     <div>
                         <input type="text"

@@ -14,7 +14,7 @@ public class AddModel : PageModel
     private readonly IMapper _mapper;
 
     [BindProperty]
-    public ProductRequest ProductVm { get; set; } = null!;
+    public ProductRequest ProductRequest { get; set; } = null!;
 
     [ViewData]
     public IEnumerable<CategoryResponse> Categories { get; set; }
@@ -36,26 +36,21 @@ public class AddModel : PageModel
     {
         if (!ModelState.IsValid)
         {
-            Categories = _mapper
-                .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll());
-
             return;
         }
 
         if (!UploadImage(Request.Form.Files["Image"], out var fileName))
-        {
-            Categories = _mapper
-                .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll());
-            ModelState.AddModelError("ProductVm.Image", "Invalid image");
+        { 
+            ModelState.AddModelError(nameof(ProductRequest.Image), "Invalid image");
             return;
         }
 
-        ProductVm = ProductVm with { Image = fileName };
-        _productService.Add(_mapper.Map<Product>(ProductVm));
+        ProductRequest = ProductRequest with { Image = fileName };
+        _productService.Add(_mapper.Map<Product>(ProductRequest));
         Response.Redirect("Management");
     }
 
-    private bool UploadImage(IFormFile? file, out string fileName)
+    public bool UploadImage(IFormFile? file, out string fileName)
     {
         fileName = string.Empty;
         if (file is null || file.Length == 0)

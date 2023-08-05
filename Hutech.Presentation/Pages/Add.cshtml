@@ -17,23 +17,26 @@
                       enctype="multipart/form-data"
                       asp-antiforgery="true">
                     <div>
-                        <input type="text" placeholder="Name" name="Name"/>
-                        <span asp-validation-for="ProductVm.Name" class="text-danger"></span>
+                        <input type="text" placeholder="Name" asp-for="ProductRequest.Name"/>
+                        <span asp-validation-for="ProductRequest.Name"class="text-danger"></span>
                     </div>
                     <div>
-                        <input step="1" min="0" type="number" placeholder="Price" name="Price"/>
-                        <span asp-validation-for="ProductVm.Price" class="text-danger"></span>
+                        <input step="1" min="0" type="number" placeholder="Price" asp-for="ProductRequest.Price" />
+                        <span asp-validation-for="ProductRequest.Price" class="text-danger"></span>
                     </div>
                     <div>
-                        <input type="file" placeholder="Image" name="Image"/>
-                        <span asp-validation-for="ProductVm.Image" class="text-danger"></span>
+                        <input type="file" placeholder="Image" asp-for="ProductRequest.Image" />
+                        <span asp-validation-for="ProductRequest.Image" class="text-danger"></span>
                     </div>
                     <div>
-                        <input type="text" class="message-box" placeholder="Description" name="Description"/>
-                        <span asp-validation-for="ProductVm.Description" class="text-danger"></span>
+                        <input type="text"
+                               class="message-box"
+                               placeholder="Description"
+                               asp-for="ProductRequest.Description" />
+                        <span asp-validation-for="ProductRequest.Description" class="text-danger"></span>
                     </div>
                     <div>
-                        <select class="w-100" style="height: 50px;" name="CategoryId">
+                        <select class="w-100" style="height: 50px;" asp-for="ProductRequest.CategoryId">
                             @foreach (var item in Model.Categories)
                             {
                                 <option value="@item.Id">@item.Name</option>

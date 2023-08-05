@@ -45,4 +45,19 @@ public class ProductService
             _unitOfWork.Rollback();
         }
     }
+
+    public void Update(Product product)
+    {
+        try
+        {
+            _unitOfWork.BeginTransaction();
+            _unitOfWork.ProductRepository.Update(product);
+            _unitOfWork.Save();
+            _unitOfWork.Commit();
+        }
+        catch (Exception)
+        {
+            _unitOfWork.Rollback();
+        }
+    }
 }
