@@ -38,10 +38,13 @@ public class EditModel : PageModel
     public void OnGet(int id)
         => Product = _mapper.Map<ProductResponse>(_productService.GetById(id));
 
-    public void OnPost()
+    public void OnGetDeleteImage(int id)
     {
-        _productService.Update(_mapper.Map<Product>(ProductRequest));
-        RedirectToPage("Management");
+        var product = _productService.GetById(id);
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", product.Image ?? string.Empty);
+        System.IO.File.Delete(path);
+        product.Image = string.Empty;
+        _productService.Update(product);
+        RedirectToPage("Edit", new { id });
     }
-    
 }
