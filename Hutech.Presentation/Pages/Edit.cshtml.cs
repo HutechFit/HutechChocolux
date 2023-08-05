@@ -2,9 +2,9 @@ using AutoMapper;
 using Hutech.Application.Models;
 using Hutech.Application.Services;
 using Hutech.Domain.Entities;
-using Hutech.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hutech.Presentation.Pages;
 
@@ -15,13 +15,13 @@ public class EditModel : PageModel
     private readonly IMapper _mapper;
 
     [ViewData]
-    public IEnumerable<CategoryResponse> Categories { get; set; }
+    public IEnumerable<SelectListItem> Categories { get; set; }
 
     [ViewData] 
     public ProductResponse Product { get; set; } = null!;
 
     [BindProperty]
-    public ProductRequest ProductRequest { get; set; } = null!;
+    public Product ProductRequest { get; set; } = null!;
 
     public EditModel(
         ProductService productService,
@@ -32,7 +32,12 @@ public class EditModel : PageModel
         _categoryService = categoryService;
         _mapper = mapper;
         Categories = _mapper
-            .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll());
+            .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll())
+            .Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
     }
 
     public void OnGet(int id)
@@ -46,5 +51,14 @@ public class EditModel : PageModel
         product.Image = string.Empty;
         _productService.Update(product);
         RedirectToPage("Edit", new { id });
+    }
+
+    public IActionResult OnPost()
+    {
+        if (!ModelState.IsValid)
+            return Page();
+
+        _productService.Update(ProductRequest);
+        return RedirectToPage("Index");
     }
 }

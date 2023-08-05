@@ -5,6 +5,7 @@ using Hutech.Domain.Entities;
 using Hutech.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hutech.Presentation.Pages;
 
@@ -18,7 +19,14 @@ public class AddModel : PageModel
     public ProductRequest ProductRequest { get; set; } = null!;
 
     [ViewData]
-    public IEnumerable<CategoryResponse> Categories { get; set; }
+    public IEnumerable<SelectListItem> Categories { get; set; }
+
+    [ViewData]
+    public IEnumerable<SelectListItem> ProductStatus { get; set; } = new List<SelectListItem>
+    {
+        new() { Value = "0", Text = "Out of stock" },
+        new() { Value = "1", Text = "In stock" }
+    };
 
     public AddModel(
         ProductService productService,
@@ -29,9 +37,13 @@ public class AddModel : PageModel
         _categoryService = categoryService;
         _mapper = mapper;
         Categories = _mapper
-            .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll());
+            .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll())
+            .Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
     }
-
 
     public void OnPost()
     {

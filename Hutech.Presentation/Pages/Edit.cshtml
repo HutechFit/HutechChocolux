@@ -19,20 +19,27 @@
                       enctype="multipart/form-data"
                       asp-page-handler="Add"
                       asp-antiforgery="true">
-                    <input type="hidden" name="Id" value="@Model.Product.Id"/>
+                    <input asp-for="ProductRequest.Id"
+                           type="hidden"
+                           name="Id"
+                           value="@Model.Product.Id"/>
                     <div>
-                        <input type="text"
+                        <input asp-for="ProductRequest.Name"
+                               type="text"
                                placeholder="Name"
                                name="Name"
                                value="@Model.Product.Name"/>
+                        <span asp-validation-for="ProductRequest.Name"class="text-danger"></span>
                     </div>
                     <div>
-                        <input step="1"
+                        <input asp-for="ProductRequest.Price"
+                               step="1"
                                min="0"
                                type="number"
                                placeholder="Price"
                                name="Price"
                                value="@Model.Product.Price"/>
+                        <span asp-validation-for="ProductRequest.Price" class="text-danger"></span>
                     </div>
                     <div class="mb-4">
                         <select class="w-100" style="height: 50px;" asp-for="ProductRequest.Status">
@@ -49,7 +56,8 @@
                         </select>
                     </div>
                     <div>
-                        <input type="file"
+                        <input asp-for="ProductRequest.Image"
+                               type="file"
                                placeholder="Image"
                                name="Image"/>
                         @if (!Model.Product.Image.IsNullOrEmpty())
@@ -66,30 +74,25 @@
                                 Delete Image
                             </a>
                         }
+                        <span asp-validation-for="ProductRequest.Image" class="text-danger"></span>
                     </div>
                     <div>
-                        <input type="text"
+                        <input asp-for="ProductRequest.Description"
+                               type="text"
                                class="message-box"
                                placeholder="Description"
                                name="Description"
                                value="@Model.Product.Description"/>
+                        <span asp-validation-for="ProductRequest.Description" class="text-danger"></span>
                     </div>
                     <div>
-                        <select class="w-100" style="height: 50px;" name="CategoryId">
-                            @foreach (var item in Model.Categories)
-                            {
-                                if (item.Id == Model.Product.CategoryId)
-                                {
-                                    <option value="@item.Id" selected>@item.Name</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.Id">@item.Name</option>
-                                }
-                            }
+                        <select asp-for="@Model.Product.CategoryId"
+                                asp-items="@Model.Categories"
+                                class="w-100"
+                                style="height: 50px;">
                         </select>
                     </div>
-                    <div class="d-flex ">
+                    <div class="d-flex">
                         <button>
                             UPDATE
                         </button>
@@ -99,3 +102,7 @@
         </div>
     </div>
 </section>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

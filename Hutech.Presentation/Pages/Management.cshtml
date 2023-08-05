@@ -69,11 +69,19 @@
                     <td>
                         @if (product.Image.IsNullOrEmpty())
                         {
-                            <img loading="lazy" src="https://fakeimg.pl/100x100?text=No+image" alt="Unknown image">
+                            <img asp-append-version="true"
+                                 src="https://fakeimg.pl/100x100?text=No+image"
+                                 loading="lazy"
+                                 alt="Unknown image">
                         }
                         else
                         {
-                            <img loading="lazy" src="./images/@product.Image" alt="@product.Name" width="100" height="100">
+                            <img asp-append-version="true"
+                                 src="./images/@product.Image"
+                                 loading="lazy"
+                                 alt="@product.Name"
+                                 width="100"
+                                 height="100">
                         }
                     </td>
                     <td>
