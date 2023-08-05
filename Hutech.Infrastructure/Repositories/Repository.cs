@@ -30,6 +30,13 @@ public class Repository<T> : IRepository<T> where T : class
         _dbSet.Remove(entity);
     }
 
+    public virtual void Delete(Expression<Func<T, bool>> where)
+    {
+        var objects = _dbSet.Where(where).AsEnumerable();
+        foreach (var obj in objects)
+            _dbSet.Remove(obj);
+    }
+
     public virtual int Count(Expression<Func<T, bool>> predicate) => _dbSet.Count(predicate);
 
     public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where) => _dbSet.Where(where);
@@ -59,4 +66,7 @@ public class Repository<T> : IRepository<T> where T : class
     }
 
     public virtual bool Any(Expression<Func<T, bool>> where) => _dbSet.Any(where);
+
+    public virtual T Get(Expression<Func<T, bool>> where) 
+        => _dbSet.FirstOrDefault(where) ?? throw new NullReferenceException();
 }

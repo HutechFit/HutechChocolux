@@ -9,7 +9,6 @@ public class ProductProfile : Profile
     public ProductProfile()
     {
         CreateMap<Product, ProductResponse>()
-            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category!.Name))
             .ReverseMap();
 
         CreateMap<Product, ProductRequest>()

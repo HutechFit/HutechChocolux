@@ -1,6 +1,7 @@
 using AutoMapper;
 using Hutech.Application.Models;
 using Hutech.Application.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Hutech.Presentation.Pages;
@@ -10,13 +11,23 @@ public class ManagementModel : PageModel
     private readonly ProductService _productService;
     private readonly IMapper _mapper;
 
-    public ManagementModel(ProductService productService, IMapper mapper)
-        => (_productService, _mapper) = (productService, mapper);
+    [ViewData] 
+    public IEnumerable<ProductResponse> Products { get; set; }
 
-    public void OnGet()
-        => ViewData["Products"] = _mapper
-                .Map<IEnumerable<ProductResponse>>(_productService.GetAll());
+    public ManagementModel(ProductService productService, IMapper mapper)
+    {
+        _productService = productService;
+        _mapper = mapper;
+        Products = _mapper
+            .Map<IEnumerable<ProductResponse>>(_productService.GetAll());
+    }
 
     public void OnGetSearch(string search)
-        => ViewData["Products"] = null;
+        => throw new NotImplementedException();
+
+    public void OnGetDelete(int id)
+    {
+        _productService.Delete(id);
+        Response.Redirect("Management");
+    }
 }

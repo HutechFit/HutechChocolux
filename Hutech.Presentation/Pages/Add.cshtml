@@ -1,5 +1,4 @@
 ﻿@page
-@using Hutech.Application.Models
 @model AddModel
 @{
     ViewData["Title"] = "Add";
@@ -16,23 +15,26 @@
                 </div>
                 <form method="post"
                       enctype="multipart/form-data"
-                      asp-page-handler="Add"
                       asp-antiforgery="true">
                     <div>
-                        <input type="text" placeholder="Product name" name="Name"/>
+                        <input type="text" placeholder="Name" name="Name"/>
+                        <span asp-validation-for="ProductVm.Name" class="text-danger"></span>
                     </div>
                     <div>
                         <input step="1" min="0" type="number" placeholder="Price" name="Price"/>
+                        <span asp-validation-for="ProductVm.Price" class="text-danger"></span>
                     </div>
                     <div>
                         <input type="file" placeholder="Image" name="Image"/>
+                        <span asp-validation-for="ProductVm.Image" class="text-danger"></span>
                     </div>
                     <div>
                         <input type="text" class="message-box" placeholder="Description" name="Description"/>
+                        <span asp-validation-for="ProductVm.Description" class="text-danger"></span>
                     </div>
                     <div>
                         <select class="w-100" style="height: 50px;" name="CategoryId">
-                            @foreach (var item in (ViewData["Categories"] as List<CategoryResponse>)!)
+                            @foreach (var item in Model.Categories)
                             {
                                 <option value="@item.Id">@item.Name</option>
                             }
@@ -48,3 +50,7 @@
         </div>
     </div>
 </section>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

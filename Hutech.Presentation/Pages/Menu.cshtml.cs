@@ -11,13 +11,14 @@ public class MenuModel : PageModel
     private readonly ProductService _productService;
     private readonly IMapper _mapper;
 
-    [BindProperty]
-    public ProductRequest? Product { get; set; }
+    [ViewData]
+    public IEnumerable<ProductResponse> Products { get; set; }
 
     public MenuModel(ProductService productService, IMapper mapper)
-        => (_productService, _mapper) = (productService, mapper);
-
-    public void OnGet()
-        => ViewData["Products"] = _mapper
+    {
+        _productService = productService;
+        _mapper = mapper;
+        Products = _mapper
             .Map<IEnumerable<ProductResponse>>(_productService.GetAll());
+    }
 }

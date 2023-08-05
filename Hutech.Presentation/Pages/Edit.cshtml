@@ -1,7 +1,7 @@
 ﻿@page
 @using Hutech.Application.Models
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model Hutech.Presentation.Pages.EditModel
+@model EditModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -19,29 +19,55 @@
                       enctype="multipart/form-data"
                       asp-page-handler="Add"
                       asp-antiforgery="true">
+                    <input type="hidden" name="Id" value="@Model.Product.Id"/>
                     <div>
-                        <input type="text" placeholder="Product name" name="Name"/>
+                        <input type="text"
+                               placeholder="Name"
+                               name="Name"
+                               value="@Model.Product.Name"/>
                     </div>
                     <div>
-                        <input step="1" min="0" type="number" placeholder="Price" name="Price"/>
+                        <input step="1"
+                               min="0"
+                               type="number"
+                               placeholder="Price"
+                               name="Price"
+                               value="@Model.Product.Price"/>
                     </div>
                     <div>
-                        <input type="file" placeholder="Image" name="Image"/>
+                        <input type="file"
+                               placeholder="Image"
+                               name="Image"/>
+                        <img src="./images/@Model.Product.Image"
+                             alt="Image"
+                             style="width: 100px; height: 100px;"/>
+                        <a href="#" class="btn btn-danger">Delete Image</a>
                     </div>
                     <div>
-                        <input type="text" class="message-box" placeholder="Description" name="Description"/>
+                        <input type="text"
+                               class="message-box"
+                               placeholder="Description"
+                               name="Description"
+                               value="@Model.Product.Description"/>
                     </div>
                     <div>
                         <select class="w-100" style="height: 50px;" name="CategoryId">
                             @foreach (var item in (ViewData["Categories"] as List<CategoryResponse>)!)
                             {
-                                <option value="@item.Id">@item.Name</option>
+                                if (item.Id == Model.Product.CategoryId)
+                                {
+                                    <option value="@item.Id" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
                             }
                         </select>
                     </div>
                     <div class="d-flex ">
                         <button>
-                            ADD
+                            UPDATE
                         </button>
                     </div>
                 </form>
