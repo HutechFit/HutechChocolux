@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Hutech.Application.Models;
+using Hutech.Application.ViewModels;
 using Hutech.Domain.Entities;
 
 namespace Hutech.Application.Mapping;

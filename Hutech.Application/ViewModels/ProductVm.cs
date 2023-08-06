@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Hutech.Domain.Enums;
 
-namespace Hutech.Application.Models;
+namespace Hutech.Application.ViewModels;
 
 public record ProductResponse(
     int Id,

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Hutech.Application.Models;
+namespace Hutech.Application.ViewModels;
 
 public record CategoryResponse(int Id, string Name, string Description);
 

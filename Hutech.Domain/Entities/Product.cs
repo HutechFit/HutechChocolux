@@ -2,7 +2,7 @@
 
 namespace Hutech.Domain.Entities;
 
-public class Product
+public sealed class Product
 {
     public int Id { get; set; }
     public required string? Name { get; set; }

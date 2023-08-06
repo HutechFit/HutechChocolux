@@ -1,6 +1,6 @@
 using AutoMapper;
-using Hutech.Application.Models;
 using Hutech.Application.Services;
+using Hutech.Application.ViewModels;
 using Hutech.Domain.Entities;
 using Hutech.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
