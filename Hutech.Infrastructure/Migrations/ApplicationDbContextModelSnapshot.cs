@@ -32,16 +32,18 @@ namespace Hutech.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(250)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Hutech.Domain.Entities.Product", b =>
@@ -57,6 +59,7 @@ namespace Hutech.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(250)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Image")
@@ -65,19 +68,22 @@ namespace Hutech.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Hutech.Infrastructure.Identity.ApplicationUser", b =>

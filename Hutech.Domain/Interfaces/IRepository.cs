@@ -13,6 +13,7 @@ public interface IRepository<T> where T : class
     public int Count(Expression<Func<T, bool>> predicate);
     public IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
     public IEnumerable<T> GetList(Criteria<T> criteria);
+    public IEnumerable<T> ShapeData(IEnumerable<T> entities, string fieldsString);
     public bool Any(Expression<Func<T, bool>> where);
     public T Get(Expression<Func<T, bool>> where);
 }

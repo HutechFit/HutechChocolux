@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System.Dynamic;
+using System.Linq.Expressions;
+using System.Reflection;
 using Hutech.Domain.Interfaces;
 using Hutech.Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +15,11 @@ public class Repository<T> : IRepository<T> where T : class
     public Repository(ApplicationDbContext context) 
         => (_context, _dbSet) = (context, context.Set<T>());
 
-    public virtual IEnumerable<T> GetAll() => _dbSet.AsNoTracking();
+    public virtual IEnumerable<T> GetAll() 
+        => _dbSet.AsNoTracking();
 
-    public virtual void Insert(T entity) => _dbSet.Add(entity);
+    public virtual void Insert(T entity) 
+        => _dbSet.Add(entity);
 
     public virtual void Update(T entity)
     {
@@ -37,14 +41,16 @@ public class Repository<T> : IRepository<T> where T : class
             _dbSet.Remove(obj);
     }
 
-    public virtual int Count(Expression<Func<T, bool>> predicate) => _dbSet.Count(predicate);
+    public virtual int Count(Expression<Func<T, bool>> predicate) 
+        => _dbSet.Count(predicate);
 
-    public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where) => _dbSet.Where(where);
+    public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where) 
+        => _dbSet.Where(where);
 
     public virtual IEnumerable<T> GetList(Criteria<T> criteria)
     {
         IQueryable<T> query = _dbSet;
-        if (criteria.Filter is not null)
+        if (criteria.Filter is { })
             query = query.Where(criteria.Filter);
 
         query = criteria
@@ -53,7 +59,7 @@ public class Repository<T> : IRepository<T> where T : class
             .Aggregate(query, (current, includeProperty) 
                 => current.Include(includeProperty)) ?? query;
 
-        if (criteria.OrderBy is not null)
+        if (criteria.OrderBy is { })
             query = criteria.OrderBy(query);
 
         if (criteria.Skip != 0)
@@ -65,8 +71,47 @@ public class Repository<T> : IRepository<T> where T : class
         return query;
     }
 
-    public virtual bool Any(Expression<Func<T, bool>> where) => _dbSet.Any(where);
+    public IEnumerable<T> ShapeData(IEnumerable<T> entities, string fieldsString)
+    {
+        ArgumentNullException.ThrowIfNull(entities, nameof(entities));
+
+        if (string.IsNullOrWhiteSpace(fieldsString))
+            return entities;
+
+        var fields = fieldsString.Split(',');
+
+        var shapedEntities = new List<ExpandoObject>();
+
+        foreach (var entity in entities)
+        {
+            var dataShapedObject = new ExpandoObject();
+
+            foreach (var field in fields)
+            {
+                var propertyInfo = typeof(T)
+                    .GetProperty(field.Trim(),
+                        BindingFlags.IgnoreCase 
+                        | BindingFlags.Public 
+                        | BindingFlags.Instance);
+
+                if (propertyInfo is null) 
+                    continue;
+
+                var propertyValue = propertyInfo.GetValue(entity);
+                (dataShapedObject as IDictionary<string, object>)
+                    .Add(propertyInfo.Name, propertyValue ?? string.Empty);
+            }
+
+            shapedEntities.Add(dataShapedObject);
+        }
+
+        return (IEnumerable<T>)shapedEntities;
+    }
+
+    public virtual bool Any(Expression<Func<T, bool>> where) 
+        => _dbSet.Any(where);
 
     public virtual T Get(Expression<Func<T, bool>> where) 
-        => _dbSet.FirstOrDefault(where) ?? throw new NullReferenceException();
+        => _dbSet.FirstOrDefault(where) 
+           ?? throw new NullReferenceException();
 }
