@@ -33,9 +33,10 @@
                        class="btn btn-primary">
                         NEW PRODUCT
                     </a>
-                    <form class="d-flex" method="get"
-                          asp-page-handler="Search"
-                          asp-antiforgery="true">
+                    <form asp-page-handler="Search"
+                          asp-page="Management"
+                          class="d-flex" 
+                          method="get">
                         <input class="form-control me-2"
                                type="search"
                                placeholder="Search by name..."
@@ -104,7 +105,7 @@
                             <span class="text-danger">Out of stock</span>
                         }
                     </td>
-                    <td>@product.CategoryId</td>
+                    <td>@product.Category?.Name</td>
                     <td>
                         <a asp-page="Edit"
                            asp-route-id="@product.Id"

@@ -3,17 +3,10 @@ using Hutech.Domain.Enums;
 
 namespace Hutech.Application.ViewModels;
 
-public record ProductResponse(
+public record ProductVm(
+    [property: Key]
     int Id,
-    string Name,
-    double Price,
-    int Status,
-    string? Description,
-    string? Image,
-    int CategoryId);
-
-
-public record ProductRequest(
+    
     [StringLength(50, ErrorMessage = "Name cannot be longer than 50 characters.")]
     [Required(ErrorMessage = "Name is required.")]
     string Name,
@@ -29,4 +22,5 @@ public record ProductRequest(
 
     string? Image,
 
-    int CategoryId);
+    int CategoryId
+);

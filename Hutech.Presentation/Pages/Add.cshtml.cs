@@ -16,7 +16,7 @@ public class AddModel : PageModel
     private readonly IMapper _mapper;
 
     [BindProperty]
-    public ProductRequest ProductRequest { get; set; } = null!;
+    public ProductVm ProductVm { get; set; } = null!;
 
     [ViewData]
     public IEnumerable<SelectListItem> Categories { get; set; }
@@ -37,7 +37,7 @@ public class AddModel : PageModel
         _categoryService = categoryService;
         _mapper = mapper;
         Categories = _mapper
-            .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll())
+            .Map<IEnumerable<Category>>(_categoryService.GetAll())
             .Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
@@ -50,46 +50,48 @@ public class AddModel : PageModel
         if (!ModelState.IsValid)
             return;
 
-        if (!UploadImage(Request.Form.Files["ProductRequest.Image"], out var fileName))
+        if (!UploadImage(Request.Form.Files["ProductVm.Image"], out var fileName))
             return;
 
-        ProductRequest = ProductRequest with
+        ProductVm = ProductVm with
         {
             Image = fileName,
-            Status = ProductRequest.Status switch
+            Status = ProductVm.Status switch
             {
                 0 => Status.InStock,
                 _ => Status.OutOfStock
             }
         };
-        _productService.Add(_mapper.Map<Product>(ProductRequest));
+        _productService.Add(_mapper.Map<Product>(ProductVm));
         Response.Redirect("Management");
     }
 
-    public bool UploadImage(IFormFile? file, out string fileName)
+    public  bool UploadImage(IFormFile? file, out string fileName)
     {
         fileName = string.Empty;
         if (file is null || file.Length == 0)
-        {
-            ModelState.AddModelError("ProductRequest.Image", "Image is required");
             return false;
-        }
 
         if (file.Length > 1024 * 1024)
         {
-            ModelState.AddModelError("ProductRequest.Image", "Image must be less than 1MB");
+            ModelState
+                .AddModelError("ProductVm.Image", "Image must be less than 1MB");
             return false;
         }
         
         var extension = Path.GetExtension(file.FileName);
         if (extension is not (".jpg" or ".png"))
         {
-            ModelState.AddModelError("ProductRequest.Image", "Image must be jpg or png");
+            ModelState
+                .AddModelError("ProductVm.Image", "Image must be jpg or png");
             return false;
         }
 
         fileName = $"{Guid.NewGuid()}{extension}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+        var path = Path
+            .Combine(Directory
+                .GetCurrentDirectory(),
+                "wwwroot", "images", fileName);
         using var stream = new FileStream(path, FileMode.Create);
         file.CopyTo(stream);
         return true;

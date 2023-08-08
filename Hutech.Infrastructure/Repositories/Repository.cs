@@ -12,13 +12,16 @@ public class Repository<T> : IRepository<T> where T : class
     private readonly ApplicationDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public Repository(ApplicationDbContext context) 
+    public Repository(ApplicationDbContext context)
         => (_context, _dbSet) = (context, context.Set<T>());
 
-    public virtual IEnumerable<T> GetAll() 
+    public virtual IEnumerable<T> GetAll()
         => _dbSet.AsNoTracking();
 
-    public virtual void Insert(T entity) 
+    public virtual IEnumerable<T> GetLazy(Func<IQueryable<T>, IQueryable<T>> func)
+        => func(_dbSet.AsNoTracking());
+
+    public virtual void Insert(T entity)
         => _dbSet.Add(entity);
 
     public virtual void Update(T entity)
@@ -41,10 +44,10 @@ public class Repository<T> : IRepository<T> where T : class
             _dbSet.Remove(obj);
     }
 
-    public virtual int Count(Expression<Func<T, bool>> predicate) 
+    public virtual int Count(Expression<Func<T, bool>> predicate)
         => _dbSet.Count(predicate);
 
-    public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where) 
+    public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
         => _dbSet.Where(where);
 
     public virtual IEnumerable<T> GetList(Criteria<T> criteria)
@@ -56,7 +59,7 @@ public class Repository<T> : IRepository<T> where T : class
         query = criteria
             .IncludeProperties?
             .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-            .Aggregate(query, (current, includeProperty) 
+            .Aggregate(query, (current, includeProperty)
                 => current.Include(includeProperty)) ?? query;
 
         if (criteria.OrderBy is { })
@@ -90,11 +93,11 @@ public class Repository<T> : IRepository<T> where T : class
             {
                 var propertyInfo = typeof(T)
                     .GetProperty(field.Trim(),
-                        BindingFlags.IgnoreCase 
-                        | BindingFlags.Public 
+                        BindingFlags.IgnoreCase
+                        | BindingFlags.Public
                         | BindingFlags.Instance);
 
-                if (propertyInfo is null) 
+                if (propertyInfo is null)
                     continue;
 
                 var propertyValue = propertyInfo.GetValue(entity);
@@ -108,10 +111,10 @@ public class Repository<T> : IRepository<T> where T : class
         return (IEnumerable<T>)shapedEntities;
     }
 
-    public virtual bool Any(Expression<Func<T, bool>> where) 
+    public virtual bool Any(Expression<Func<T, bool>> where)
         => _dbSet.Any(where);
 
-    public virtual T Get(Expression<Func<T, bool>> where) 
-        => _dbSet.FirstOrDefault(where) 
+    public virtual T Get(Expression<Func<T, bool>> where)
+        => _dbSet.FirstOrDefault(where)
            ?? throw new NullReferenceException();
 }

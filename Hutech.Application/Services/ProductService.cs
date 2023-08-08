@@ -1,5 +1,6 @@
 ﻿using Hutech.Domain.Entities;
 using Hutech.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hutech.Application.Services;
 
@@ -11,10 +12,15 @@ public class ProductService
         => _unitOfWork = unitOfWork;
 
     public IEnumerable<Product> GetAll() 
-        => _unitOfWork.ProductRepository.GetAll();
+        => _unitOfWork.ProductRepository
+            .GetLazy(q => q
+                .Include(x => x.Category));
 
     public Product GetById(int id)
         => _unitOfWork.ProductRepository.Get(x => x.Id == id);
+
+    public IEnumerable<Product> Query(string keyword)
+        => _unitOfWork.ProductRepository.GetMany(x => x.Name!.Contains(keyword));
 
     public void Add(Product product)
     {

@@ -1,6 +1,6 @@
 using AutoMapper;
 using Hutech.Application.Services;
-using Hutech.Application.ViewModels;
+using Hutech.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,13 +12,13 @@ public class MenuModel : PageModel
     private readonly IMapper _mapper;
 
     [ViewData]
-    public IEnumerable<ProductResponse> Products { get; set; }
+    public IEnumerable<Product> Products { get; set; }
 
     public MenuModel(ProductService productService, IMapper mapper)
     {
         _productService = productService;
         _mapper = mapper;
         Products = _mapper
-            .Map<IEnumerable<ProductResponse>>(_productService.GetAll());
+            .Map<IEnumerable<Product>>(_productService.GetAll());
     }
 }

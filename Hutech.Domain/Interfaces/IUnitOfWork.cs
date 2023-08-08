@@ -10,5 +10,4 @@ public interface IUnitOfWork
     public void Commit();
     public void Rollback();
     public void Save();
-    public void Dispose();
 }

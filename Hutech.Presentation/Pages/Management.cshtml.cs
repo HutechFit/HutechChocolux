@@ -1,6 +1,5 @@
-using AutoMapper;
 using Hutech.Application.Services;
-using Hutech.Application.ViewModels;
+using Hutech.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,21 +8,23 @@ namespace Hutech.Presentation.Pages;
 public class ManagementModel : PageModel
 {
     private readonly ProductService _productService;
-    private readonly IMapper _mapper;
 
     [ViewData] 
-    public IEnumerable<ProductResponse> Products { get; set; }
+    public IEnumerable<Product> Products { get; set; } = new List<Product>();
 
-    public ManagementModel(ProductService productService, IMapper mapper)
-    {
-        _productService = productService;
-        _mapper = mapper;
-        Products = _mapper
-            .Map<IEnumerable<ProductResponse>>(_productService.GetAll());
-    }
+    public ManagementModel(ProductService productService)
+        => _productService = productService;
+    
+
+    public void OnGet()
+        => Products = _productService.GetAll();
+    
 
     public void OnGetSearch(string search)
-        => throw new NotImplementedException();
+    {
+        Products = _productService.Query(search);
+        ViewData["search"] = search;
+    }
 
     public void OnGetDelete(int id)
     {

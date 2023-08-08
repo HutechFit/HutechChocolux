@@ -19,30 +19,27 @@
                       enctype="multipart/form-data"
                       asp-page-handler="Add"
                       asp-antiforgery="true">
-                    <input asp-for="ProductRequest.Id"
+                    <input asp-for="ProductVm.Id"
                            type="hidden"
-                           name="Id"
                            value="@Model.Product.Id"/>
                     <div>
-                        <input asp-for="ProductRequest.Name"
+                        <input asp-for="ProductVm.Name"
                                type="text"
                                placeholder="Name"
-                               name="Name"
                                value="@Model.Product.Name"/>
-                        <span asp-validation-for="ProductRequest.Name"class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Name"class="text-danger"></span>
                     </div>
                     <div>
-                        <input asp-for="ProductRequest.Price"
+                        <input asp-for="ProductVm.Price"
                                step="1"
                                min="0"
                                type="number"
                                placeholder="Price"
-                               name="Price"
                                value="@Model.Product.Price"/>
-                        <span asp-validation-for="ProductRequest.Price" class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Price" class="text-danger"></span>
                     </div>
                     <div class="mb-4">
-                        <select class="w-100" style="height: 50px;" asp-for="ProductRequest.Status">
+                        <select class="w-100" style="height: 50px;" asp-for="ProductVm.Status">
                             @if (Model.Product.Status == 0)
                             {
                                 <option value="0" selected>In stock</option>
@@ -56,10 +53,9 @@
                         </select>
                     </div>
                     <div>
-                        <input asp-for="ProductRequest.Image"
+                        <input asp-for="ProductVm.Image"
                                type="file"
-                               placeholder="Image"
-                               name="Image"/>
+                               value="@Model.Product.Image" />
                         @if (!Model.Product.Image.IsNullOrEmpty())
                         {
                             <img loading="lazy"
@@ -74,19 +70,18 @@
                                 Delete Image
                             </a>
                         }
-                        <span asp-validation-for="ProductRequest.Image" class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Image" class="text-danger"></span>
                     </div>
                     <div>
-                        <input asp-for="ProductRequest.Description"
+                        <input asp-for="ProductVm.Description"
                                type="text"
                                class="message-box"
                                placeholder="Description"
-                               name="Description"
                                value="@Model.Product.Description"/>
-                        <span asp-validation-for="ProductRequest.Description" class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Description" class="text-danger"></span>
                     </div>
                     <div>
-                        <select asp-for="@Model.Product.CategoryId"
+                        <select asp-for="ProductVm.CategoryId"
                                 asp-items="@Model.Categories"
                                 class="w-100"
                                 style="height: 50px;">

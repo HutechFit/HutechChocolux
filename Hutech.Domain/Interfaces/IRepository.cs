@@ -6,6 +6,7 @@ namespace Hutech.Domain.Interfaces;
 public interface IRepository<T> where T : class
 {
     public IEnumerable<T> GetAll();
+    public IEnumerable<T> GetLazy(Func<IQueryable<T>, IQueryable<T>> func);
     public void Insert(T entity);
     public void Update(T entity);
     public void Delete(T entity);

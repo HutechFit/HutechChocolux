@@ -17,11 +17,11 @@ public class EditModel : PageModel
     [ViewData]
     public IEnumerable<SelectListItem> Categories { get; set; }
 
-    [ViewData] 
-    public ProductResponse Product { get; set; } = null!;
+    [ViewData]
+    public Product Product { get; set; } = null!;
 
     [BindProperty]
-    public Product ProductRequest { get; set; } = null!;
+    public ProductVm ProductVm { get; set; } = null!;
 
     public EditModel(
         ProductService productService,
@@ -32,7 +32,7 @@ public class EditModel : PageModel
         _categoryService = categoryService;
         _mapper = mapper;
         Categories = _mapper
-            .Map<IEnumerable<CategoryResponse>>(_categoryService.GetAll())
+            .Map<IEnumerable<Category>>(_categoryService.GetAll())
             .Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
@@ -40,8 +40,8 @@ public class EditModel : PageModel
             });
     }
 
-    public void OnGet(int id)
-        => Product = _mapper.Map<ProductResponse>(_productService.GetById(id));
+    public void OnGet([FromQuery] int id)
+        => Product = _mapper.Map<Product>(_productService.GetById(id));
 
     public void OnGetDeleteImage(int id)
     {
@@ -56,9 +56,53 @@ public class EditModel : PageModel
     public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
-            return Page();
+            return RedirectToPage("Edit", new { ProductVm.Id });
 
-        _productService.Update(ProductRequest);
-        return RedirectToPage("Index");
+        if (Request.Form.Files["ProductVm.Image"] is { })
+        {
+            if (!UploadImage(Request.Form.Files["ProductVm.Image"],
+                    out var fileName))
+                return RedirectToPage("Edit",
+                    new { ProductVm.Id });
+
+            var path = Path.Combine(Directory
+                .GetCurrentDirectory(),
+                "wwwroot", "images",
+                Product.Image ?? string.Empty);
+            System.IO.File.Delete(path);
+
+            ProductVm = ProductVm with { Image = fileName };
+        }
+        else
+            ProductVm = ProductVm with { Image = Product.Image };
+
+        _productService.Update(_mapper.Map<Product>(ProductVm));
+        return RedirectToPage("Management");
+    }
+
+    public bool UploadImage(IFormFile? file, out string fileName)
+    {
+        fileName = string.Empty;
+        if (file is null || file.Length == 0)
+            return false;
+
+        if (file.Length > 1024 * 1024)
+        {
+            ModelState.AddModelError("ProductVm.Image", "Image must be less than 1MB");
+            return false;
+        }
+
+        var extension = Path.GetExtension(file.FileName);
+        if (extension is not (".jpg" or ".png"))
+        {
+            ModelState.AddModelError("ProductVm.Image", "Image must be jpg or png");
+            return false;
+        }
+
+        fileName = $"{Guid.NewGuid()}{extension}";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+        using var stream = new FileStream(path, FileMode.Create);
+        file.CopyTo(stream);
+        return true;
     }
 }
