@@ -27,19 +27,22 @@
                                type="text"
                                placeholder="Name"
                                value="@Model.Product.Name"/>
-                        <span asp-validation-for="ProductVm.Name"class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Name"
+                              class="text-danger"></span>
                     </div>
                     <div>
                         <input asp-for="ProductVm.Price"
+                               value="@Model.Product.Price"
+                               type="number"
                                step="1"
                                min="0"
-                               type="number"
-                               placeholder="Price"
-                               value="@Model.Product.Price"/>
-                        <span asp-validation-for="ProductVm.Price" class="text-danger"></span>
+                               placeholder="Price" />
+                        <span asp-validation-for="ProductVm.Price"
+                              class="text-danger"></span>
                     </div>
                     <div class="mb-4">
-                        <select class="w-100" style="height: 50px;" asp-for="ProductVm.Status">
+                        <select asp-for="ProductVm.Status"
+                                class="w-100" style="height: 50px;">
                             @if (Model.Product.Status == 0)
                             {
                                 <option value="0" selected>In stock</option>
@@ -54,8 +57,7 @@
                     </div>
                     <div>
                         <input asp-for="ProductVm.Image"
-                               type="file"
-                               value="@Model.Product.Image" />
+                               type="file" />
                         @if (!Model.Product.Image.IsNullOrEmpty())
                         {
                             <img loading="lazy"
@@ -70,7 +72,8 @@
                                 Delete Image
                             </a>
                         }
-                        <span asp-validation-for="ProductVm.Image" class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Image"
+                              class="text-danger"></span>
                     </div>
                     <div>
                         <input asp-for="ProductVm.Description"
@@ -78,10 +81,11 @@
                                class="message-box"
                                placeholder="Description"
                                value="@Model.Product.Description"/>
-                        <span asp-validation-for="ProductVm.Description" class="text-danger"></span>
+                        <span asp-validation-for="ProductVm.Description"
+                              class="text-danger"></span>
                     </div>
                     <div>
-                        <select asp-for="ProductVm.CategoryId"
+                        <select asp-for="@Model.Product.CategoryId"
                                 asp-items="@Model.Categories"
                                 class="w-100"
                                 style="height: 50px;">

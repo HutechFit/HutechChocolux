@@ -24,8 +24,8 @@ public class AddModel : PageModel
     [ViewData]
     public IEnumerable<SelectListItem> ProductStatus { get; set; } = new List<SelectListItem>
     {
-        new() { Value = "0", Text = "Out of stock" },
-        new() { Value = "1", Text = "In stock" }
+        new() { Value = "0", Text = "In stock" },
+        new() { Value = "1", Text = "Out of stock" }
     };
 
     public AddModel(

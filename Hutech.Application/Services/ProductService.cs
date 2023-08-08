@@ -11,10 +11,9 @@ public class ProductService
     public ProductService(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
-    public IEnumerable<Product> GetAll() 
+    public IEnumerable<Product> GetAll()
         => _unitOfWork.ProductRepository
-            .GetLazy(q => q
-                .Include(x => x.Category));
+            .GetLazy(q => q.Include(x => x.Category));
 
     public Product GetById(int id)
         => _unitOfWork.ProductRepository.Get(x => x.Id == id);

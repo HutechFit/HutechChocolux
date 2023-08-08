@@ -17,29 +17,44 @@
                       enctype="multipart/form-data"
                       asp-antiforgery="true">
                     <div>
-                        <input type="text" placeholder="Name" asp-for="ProductVm.Name"/>
-                        <span asp-validation-for="ProductVm.Name"class="text-danger"></span>
+                        <input type="text"
+                               asp-for="ProductVm.Name"
+                               placeholder="Name"/>
+                        <span asp-validation-for="ProductVm.Name"
+                              class="text-danger">
+                        </span>
                     </div>
                     <div>
-                        <input step="1" min="0" type="number" placeholder="Price" asp-for="ProductVm.Price"/>
-                        <span asp-validation-for="ProductVm.Price" class="text-danger"></span>
+                        <input type="number"
+                               asp-for="ProductVm.Price"
+                               step="1" min="0"
+                               placeholder="Price"/>
+                        <span asp-validation-for="ProductVm.Price"
+                              class="text-danger">
+                        </span>
                     </div>
                     <div class="mb-4">
                         <select asp-items="@Model.ProductStatus"
                                 asp-for="ProductVm.Status"
-                                class="w-100" style="height: 50px;">
+                                class="w-100"
+                                style="height: 50px;">
                         </select>
                     </div>
                     <div>
-                        <input type="file" placeholder="Image" asp-for="ProductVm.Image"/>
-                        <span asp-validation-for="ProductVm.Image" class="text-danger"></span>
+                        <input type="file"
+                               asp-for="ProductVm.Image"/>
+                        <span asp-validation-for="ProductVm.Image"
+                              class="text-danger">
+                        </span>
                     </div>
                     <div>
                         <input type="text"
+                               asp-for="ProductVm.Description"
                                class="message-box"
-                               placeholder="Description"
-                               asp-for="ProductVm.Description"/>
-                        <span asp-validation-for="ProductVm.Description" class="text-danger"></span>
+                               placeholder="Description"/>
+                        <span asp-validation-for="ProductVm.Description"
+                              class="text-danger">
+                        </span>
                     </div>
                     <div>
                         <select asp-for="ProductVm.CategoryId"

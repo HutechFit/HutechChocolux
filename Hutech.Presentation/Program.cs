@@ -16,6 +16,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors()
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         .UseModel(Hutech.Infrastructure.CompiledModels.ApplicationDbContextModel.Instance)
     );

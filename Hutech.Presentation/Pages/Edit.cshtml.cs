@@ -18,7 +18,7 @@ public class EditModel : PageModel
     public IEnumerable<SelectListItem> Categories { get; set; }
 
     [ViewData]
-    public Product Product { get; set; } = null!;
+    public Product Product { get; set; } = default!;
 
     [BindProperty]
     public ProductVm ProductVm { get; set; } = null!;
@@ -41,20 +41,24 @@ public class EditModel : PageModel
     }
 
     public void OnGet([FromQuery] int id)
-        => Product = _mapper.Map<Product>(_productService.GetById(id));
+        => Product = _productService.GetById(id);
 
-    public void OnGetDeleteImage(int id)
+    public IActionResult OnGetDeleteImage([FromQuery] int id)
     {
         var product = _productService.GetById(id);
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", product.Image ?? string.Empty);
+        var path = Path
+            .Combine(Directory
+                .GetCurrentDirectory(), "wwwroot", "images",
+                product.Image ?? string.Empty);
         System.IO.File.Delete(path);
         product.Image = string.Empty;
         _productService.Update(product);
-        RedirectToPage("Edit", new { id });
+        return RedirectToPage("Edit", new { id });
     }
 
     public IActionResult OnPost()
     {
+        var product = _productService.GetById(ProductVm.Id);
         if (!ModelState.IsValid)
             return RedirectToPage("Edit", new { ProductVm.Id });
 
@@ -65,16 +69,10 @@ public class EditModel : PageModel
                 return RedirectToPage("Edit",
                     new { ProductVm.Id });
 
-            var path = Path.Combine(Directory
-                .GetCurrentDirectory(),
-                "wwwroot", "images",
-                Product.Image ?? string.Empty);
-            System.IO.File.Delete(path);
-
             ProductVm = ProductVm with { Image = fileName };
         }
         else
-            ProductVm = ProductVm with { Image = Product.Image };
+            ProductVm = ProductVm with { Image = product.Image };
 
         _productService.Update(_mapper.Map<Product>(ProductVm));
         return RedirectToPage("Management");
@@ -100,7 +98,9 @@ public class EditModel : PageModel
         }
 
         fileName = $"{Guid.NewGuid()}{extension}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+        var path = Path
+            .Combine(Directory
+                .GetCurrentDirectory(), "wwwroot", "images", fileName);
         using var stream = new FileStream(path, FileMode.Create);
         file.CopyTo(stream);
         return true;
