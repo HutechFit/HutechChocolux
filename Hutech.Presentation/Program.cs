@@ -18,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options
         .EnableSensitiveDataLogging()
         .EnableDetailedErrors()
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         .UseModel(Hutech.Infrastructure.CompiledModels.ApplicationDbContextModel.Instance)
     );

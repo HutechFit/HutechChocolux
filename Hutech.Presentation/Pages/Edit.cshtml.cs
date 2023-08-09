@@ -2,9 +2,9 @@ using AutoMapper;
 using Hutech.Application.Services;
 using Hutech.Application.ViewModels;
 using Hutech.Domain.Entities;
+using Hutech.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hutech.Presentation.Pages;
 
@@ -15,7 +15,7 @@ public class EditModel : PageModel
     private readonly IMapper _mapper;
 
     [ViewData]
-    public IEnumerable<SelectListItem> Categories { get; set; }
+    public IEnumerable<Category> Categories { get; set; }
 
     [ViewData]
     public Product Product { get; set; } = default!;
@@ -31,13 +31,7 @@ public class EditModel : PageModel
         _productService = productService;
         _categoryService = categoryService;
         _mapper = mapper;
-        Categories = _mapper
-            .Map<IEnumerable<Category>>(_categoryService.GetAll())
-            .Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name
-            });
+        Categories = _categoryService.GetAll();
     }
 
     public void OnGet([FromQuery] int id)
@@ -68,6 +62,15 @@ public class EditModel : PageModel
                     out var fileName))
                 return RedirectToPage("Edit",
                     new { ProductVm.Id });
+
+            if (product.Image is { })
+            {
+                var path = Path
+                    .Combine(Directory
+                            .GetCurrentDirectory(), "wwwroot", "images", 
+                        product.Image);
+                System.IO.File.Delete(path);
+            }
 
             ProductVm = ProductVm with { Image = fileName };
         }

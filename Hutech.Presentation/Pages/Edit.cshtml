@@ -1,6 +1,6 @@
 ﻿@page
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.IdentityModel.Tokens
+@using Hutech.Domain.Enums
 @model EditModel
 @{
     ViewData["Title"] = "Edit";
@@ -24,9 +24,9 @@
                            value="@Model.Product.Id"/>
                     <div>
                         <input asp-for="ProductVm.Name"
+                               value="@Model.Product.Name"
                                type="text"
-                               placeholder="Name"
-                               value="@Model.Product.Name"/>
+                               placeholder="Name" />
                         <span asp-validation-for="ProductVm.Name"
                               class="text-danger"></span>
                     </div>
@@ -42,16 +42,25 @@
                     </div>
                     <div class="mb-4">
                         <select asp-for="ProductVm.Status"
-                                class="w-100" style="height: 50px;">
-                            @if (Model.Product.Status == 0)
+                                class="w-100"
+                                style="height: 50px;">
+                            @if (Model.Product.Status.Equals(Status.InStock))
                             {
-                                <option value="0" selected>In stock</option>
-                                <option value="1">Out of stock</option>
+                                <option value="0" selected>
+                                    In stock
+                                </option>
+                                <option value="1">
+                                    Out of stock
+                                </option>
                             }
                             else
                             {
-                                <option value="0">In stock</option>
-                                <option value="1" selected>Out of stock</option>
+                                <option value="0">
+                                    In stock
+                                </option>
+                                <option value="1" selected>
+                                    Out of stock
+                                </option>
                             }
                         </select>
                     </div>
@@ -85,10 +94,24 @@
                               class="text-danger"></span>
                     </div>
                     <div>
-                        <select asp-for="@Model.Product.CategoryId"
-                                asp-items="@Model.Categories"
+                        <select asp-for="ProductVm.CategoryId"
                                 class="w-100"
                                 style="height: 50px;">
+                            @foreach(var category in Model.Categories)
+                            {
+                                if (category.Id.Equals(Model.Product.CategoryId))
+                                {
+                                    <option value="@category.Id" selected>
+                                        @category.Name
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@category.Id">
+                                        @category.Name
+                                    </option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="d-flex">

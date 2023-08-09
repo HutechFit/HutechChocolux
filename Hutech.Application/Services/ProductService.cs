@@ -18,8 +18,30 @@ public class ProductService
     public Product GetById(int id)
         => _unitOfWork.ProductRepository.Get(x => x.Id == id);
 
-    public IEnumerable<Product> Query(string keyword)
-        => _unitOfWork.ProductRepository.GetMany(x => x.Name!.Contains(keyword));
+    public IEnumerable<Product> GetPaginated(
+        int pageIndex,
+        int pageSize,
+        string? sortColumn = null,
+        string? search = null)
+        => _unitOfWork.ProductRepository
+            .GetList(new()
+            {
+                IncludeProperties = nameof(Category),
+                Skip = (pageIndex - 1) * pageSize,
+                Take = pageSize,
+                OrderBy = x => sortColumn switch
+                {
+                    "Name" => x.OrderBy(p => p.Name),
+                    "Price" => x.OrderBy(p => p.Price),
+                    "Category" => x.OrderBy(p => p.Category!.Name),
+                    "Status" => x.OrderBy(p => p.Status),
+                    _ => x.OrderBy(p => p.Id)
+                },
+                Filter = x => search == null || x.Name!.Contains(search)
+            });
+
+    public int Count()
+        => _unitOfWork.ProductRepository.Count(x => true);
 
     public void Add(Product product)
     {

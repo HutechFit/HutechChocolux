@@ -4,7 +4,6 @@ using Hutech.Domain.Enums;
 namespace Hutech.Application.ViewModels;
 
 public record ProductVm(
-    [property: Key]
     int Id,
     
     [StringLength(50, ErrorMessage = "Name cannot be longer than 50 characters.")]
