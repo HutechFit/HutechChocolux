@@ -39,7 +39,8 @@
                                class="form-control me-2"
                                placeholder="Search by name..."
                                aria-label="Search">
-                        <button class="btn btn-success" type="submit">
+                        <button class="btn btn-success"
+                                type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </form>
@@ -108,21 +109,29 @@
                     <td>
                         @if (product.Description.IsNullOrEmpty())
                         {
-                            <span class="text-info">No description</span>
+                            <span class="text-info">
+                                No description
+                            </span>
                         }
                         else
                         {
-                            <span>@product.Description</span>
+                            <span>
+                                @product.Description
+                            </span>
                         }
                     </td>
                     <td>
                         @if (product.Status == 0)
                         {
-                            <span class="text-success">In stock</span>
+                            <span class="text-success">
+                                In stock
+                            </span>
                         }
                         else
                         {
-                            <span class="text-danger">Out of stock</span>
+                            <span class="text-danger">
+                                Out of stock
+                            </span>
                         }
                     </td>
                     <td>@product.Category?.Name</td>
@@ -149,7 +158,8 @@
             <ul class="pagination">
                 @for (var i = 1; i <= Model.TotalPages; i++)
                 {
-                    <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <li class="page-item 
+                        @(Model.CurrentPage == i ? "active" : "")">
                         @{ var p = i; }
                         <a asp-page="Management"
                            asp-route-currentpage="@p"

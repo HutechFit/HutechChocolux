@@ -14,10 +14,13 @@ public class ManagementModel : PageModel
 
     [BindProperty(SupportsGet = true)]
     public int CurrentPage { get; set; } = 1;
+
     [BindProperty(SupportsGet = true)]
     public string SortBy { get; set; } = "Id";
+
     [BindProperty(SupportsGet = true)]
     public string Search { get; set; } = string.Empty;
+
     public int Count { get; set; }
     public int PageSize { get; set; } = 10;
 
@@ -30,10 +33,7 @@ public class ManagementModel : PageModel
     {
         Products = _productService.GetPaginated(CurrentPage, PageSize, SortBy, Search);
         Count = _productService.Count();
-    } 
-
-    public void OnGetSearch(string search)
-        => throw new NotImplementedException();
+    }
 
     public void OnGetDelete(int id)
     {

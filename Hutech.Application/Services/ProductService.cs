@@ -40,6 +40,12 @@ public class ProductService
                 Filter = x => search == null || x.Name!.Contains(search)
             });
 
+    public IEnumerable<Product> ShapeData(
+        IEnumerable<Product> products,
+        string fields)
+        => _unitOfWork.ProductRepository
+            .ShapeData(products, fields);
+
     public int Count()
         => _unitOfWork.ProductRepository.Count(x => true);
 
