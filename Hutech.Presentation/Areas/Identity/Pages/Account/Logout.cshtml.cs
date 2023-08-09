@@ -13,10 +13,7 @@ public class LogoutModel : PageModel
     private readonly ILogger<LogoutModel> _logger;
 
     public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger)
-    {
-        _signInManager = signInManager;
-        _logger = logger;
-    }
+        => (_signInManager, _logger) = (signInManager, logger);
 
     public async Task<IActionResult> OnPost(string? returnUrl = null)
     {
@@ -24,6 +21,6 @@ public class LogoutModel : PageModel
         _logger.LogInformation("User logged out.");
         return returnUrl is { } 
             ? LocalRedirect(returnUrl)
-            : RedirectToPage();
+            : RedirectToPage("/Index");
     }
 }
