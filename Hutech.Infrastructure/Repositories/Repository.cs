@@ -38,11 +38,7 @@ public class Repository<T> : IRepository<T> where T : class
     }
 
     public virtual void Delete(Expression<Func<T, bool>> where)
-    {
-        var objects = _dbSet.Where(where).AsEnumerable();
-        foreach (var obj in objects)
-            _dbSet.Remove(obj);
-    }
+        => _dbSet.Where(where).ExecuteDelete(); 
 
     public virtual int Count(Expression<Func<T, bool>> predicate)
         => _dbSet.Count(predicate);

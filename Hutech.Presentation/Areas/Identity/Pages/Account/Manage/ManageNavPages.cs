@@ -40,7 +40,9 @@ namespace Hutech.Presentation.Areas.Identity.Pages.Account.Manage
         {
             var activePage = viewContext.ViewData["ActivePage"] as string
                 ?? Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
-            return (string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null) 
+            return (string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) 
+                       ? "active" 
+                       : null) 
                    ?? throw new InvalidOperationException();
         }
     }

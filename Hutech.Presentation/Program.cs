@@ -59,12 +59,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-//builder.Services.AddAuthentication()
-//    .AddMicrosoftAccount(microsoftOptions =>
-//    {
-//        microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
-//        microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
-//    });
+builder.Services.AddAuthentication()
+    .AddMicrosoftAccount(microsoftOptions =>
+    {
+        microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
+        microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+    });
 
 var app = builder.Build();
 
