@@ -71,7 +71,6 @@ public class EnableAuthenticatorModel : PageModel
             return Page();
         }
 
-        // Strip spaces and hypens
         var verificationCode = Input.Code?.Replace(" ", string.Empty).Replace("-", string.Empty);
 
         var is2FaTokenValid = verificationCode is { } && await _userManager.VerifyTwoFactorTokenAsync(
@@ -127,10 +126,9 @@ public class EnableAuthenticatorModel : PageModel
             result.Append(unformattedKey.AsSpan(currentPosition, 4)).Append(' ');
             currentPosition += 4;
         }
+
         if (currentPosition < unformattedKey.Length)
-        {
             result.Append(unformattedKey.AsSpan(currentPosition));
-        }
 
         return result.ToString().ToLowerInvariant();
     }

@@ -17,7 +17,7 @@ WORKDIR "/src/Hutech.Presentation"
 RUN dotnet build "Hutech.Presentation.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Hutech.Presentation.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Hutech.Presentation.csproj" -c Release -o /app/publish /p:UseAppHost=true
 
 FROM base AS final
 WORKDIR /app
