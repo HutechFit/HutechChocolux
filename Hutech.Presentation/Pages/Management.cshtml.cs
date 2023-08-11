@@ -1,10 +1,12 @@
 using Hutech.Application.Services;
 using Hutech.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Hutech.Presentation.Pages;
 
+[Authorize(Roles = "Admin")]
 public class ManagementModel : PageModel
 {
     private readonly ProductService _productService;

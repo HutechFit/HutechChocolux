@@ -10,10 +10,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="Pages\Cart.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\Hutech.Application\Hutech.Application.csproj" />
 	</ItemGroup>
 
@@ -35,15 +31,6 @@
 		</ItemGroup>
 
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="Pages\Cart.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Pages\Cart.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="Pages\Cart.cshtml" />
 	  <TrimmerRootAssembly Include="Hutech.Presentation" />
 	  <TrimmerRootAssembly Include="Hutech.Domain" />
 	</ItemGroup>

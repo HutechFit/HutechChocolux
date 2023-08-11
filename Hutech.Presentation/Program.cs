@@ -62,8 +62,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthentication()
     .AddMicrosoftAccount(microsoftOptions =>
     {
-        microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
-        microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+        microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"] ?? throw new InvalidOperationException("Microsoft ClientId is null");
+        microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"]
+            ?? throw new InvalidOperationException("Microsoft ClientSecret is null");
     });
 
 var app = builder.Build();
