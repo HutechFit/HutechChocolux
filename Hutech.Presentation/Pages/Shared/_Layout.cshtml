@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="css/slick-theme.css"/>
-    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="~/css/style.css" rel="stylesheet"/>
+    <link href="~/css/responsive.css" rel="stylesheet"/>
 </head>
 
 <body class="@if (!ReferenceEquals(ViewData["Title"], "Homepage")) { <text>sub_page</text> }">
@@ -25,40 +25,45 @@
         <header class="header_section">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a href="/"
+                    <a asp-area=""
+                       asp-page="/Index"
                        class="navbar-brand">
                         Hutech Chocolux
                     </a>
-                    <div class="collapse navbar-collapse " 
+                    <div class="collapse navbar-collapse "
                          id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a href="/"
+                                <a asp-area=""
+                                   asp-page="/Index"
                                    class="nav-link">
                                     Home
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/Menu"
+                                <a asp-area=""
+                                   asp-page="/Menu"
                                    class="nav-link">
                                     Menu
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/Cart"
+                                <a asp-area=""
+                                   asp-page="/Cart"
                                    class="nav-link">
                                     Cart
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/Management"
+                                <a asp-area=""
+                                   asp-page="/Management"
                                    class="nav-link">
                                     Management
                                 </a>
                             </li>
                         </ul>
                         <div class="quote_btn-container">
-                            <partial name="_LoginPartial" />
+                            <partial name="_LoginPartial"/>
                         </div>
                     </div>
                 </nav>
@@ -102,10 +107,22 @@
                             Menu
                         </h4>
                         <div class="info_links_menu">
-                            <a href="/">Home</a>
-                            <a href="/Menu">Menu</a>
-                            <a href="/Cart">Cart</a>
-                            <a href="/Management">Management</a>
+                            <a asp-area=""
+                               asp-page="/Index">
+                                Home
+                            </a>
+                            <a asp-area=""
+                               asp-page="/Menu">
+                                Menu
+                            </a>
+                            <a asp-area=""
+                               asp-page="/Cart">
+                                Cart
+                            </a>
+                            <a asp-area=""
+                               asp-page="/Management">
+                                Management
+                            </a>
                         </div>
                     </div>
                 </div>

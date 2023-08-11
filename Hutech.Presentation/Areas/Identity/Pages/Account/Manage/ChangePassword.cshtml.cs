@@ -3,7 +3,6 @@ using Hutech.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-#pragma warning disable IL2026
 
 namespace Hutech.Presentation.Areas.Identity.Pages.Account.Manage;
 

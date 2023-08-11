@@ -6,19 +6,22 @@
 
 <header>
     @{
-        if (User.Identity?.IsAuthenticated ?? false)
+        if (!User.Identity?.IsAuthenticated ?? false)
         {
-            <form class="form-inline" 
-                  asp-area="Identity" 
-                  asp-page="/Account/Logout" 
-                  asp-route-returnUrl="@Url.Page("/", new { area = "" })" 
-                  method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
+            <section class="contact_section layout_padding">
+                <div class="d-flex align-items-center justify-content-center vh-25">
+                    <div class="text-center">
+                        <h1 class="display-1 fw-bold">200</h1>
+                        <p class="fs-3"> <span class="text-info">Goodbye!</span> You are logged out.</p>
+                        <p class="lead">
+                            You have successfully logged out of your account.
+                        </p>
+                        <a asp-area=""
+                           asp-page="/Index"
+                           class="btn btn-primary">Back to homepage</a>
+                    </div>
+                </div>
+            </section>
         }
     }
 </header>
