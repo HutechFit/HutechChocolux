@@ -26,9 +26,6 @@
                                 ✓
                             </span>
                         </div>
-                    <label asp-for="Email"
-                           class="form-label">
-                    </label>
                 </div>
             }
             else
@@ -38,9 +35,6 @@
                            class="form-control" 
                            placeholder="Please enter your email." 
                            disabled />
-                    <label asp-for="Email"
-                           class="form-label">
-                    </label>
                     <button id="email-verification"
                             type="submit"
                             asp-page-handler="SendVerificationEmail"
@@ -50,15 +44,15 @@
                 </div>
             }
             <div class="form-floating mb-3">
-                <input asp-for="Input.NewEmail" 
-                       class="form-control" 
-                       autocomplete="email" 
-                       aria-required="true" 
-                       placeholder="Please enter new email." />
                 <label asp-for="Input.NewEmail"
                        class="form-label">
                 </label>
-                <span asp-validation-for="Input.NewEmail" 
+                <input asp-for="Input.NewEmail"
+                       class="form-control"
+                       autocomplete="email"
+                       aria-required="true"
+                       placeholder="Please enter new email."/>
+                <span asp-validation-for="Input.NewEmail"
                       class="text-danger"></span>
             </div>
             <button id="change-email-button"

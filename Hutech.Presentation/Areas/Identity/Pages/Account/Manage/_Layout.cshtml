@@ -1,24 +1,27 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) 
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout)
         && parentLayout is { })
         Layout = parentLayout.ToString();
     else
         Layout = "/Pages/Shared/_Layout.cshtml";
 }
 
-<div>
-    <h2>Manage your account</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+<section class="contact_section layout_padding"
+         style="padding-left: 15px; padding-right: 15px;">
+    <div>
+        <h2>Manage your account</h2>
+        <hr/>
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav"/>
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", false)
 }
