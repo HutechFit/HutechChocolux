@@ -34,26 +34,33 @@ public class RegisterModel : PageModel
         public string? Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, 
+            ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+            MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", 
+            ErrorMessage = "The password and confirmation password do not match.")]
         public string? ConfirmPassword { get; set; }
     }
 
     public async Task OnGetAsync(string? returnUrl = null)
     {
         ReturnUrl = returnUrl;
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        ExternalLogins = (await _signInManager
+            .GetExternalAuthenticationSchemesAsync())
+            .ToList();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        ExternalLogins = (await _signInManager
+            .GetExternalAuthenticationSchemesAsync())
+            .ToList();
         if (!ModelState.IsValid) return Page();
         var user = new ApplicationUser
         {
@@ -62,7 +69,7 @@ public class RegisterModel : PageModel
             EmailConfirmed = true
         };
         var result = await _userManager.CreateAsync(
-            user, 
+            user,
             Input.Password ?? throw new InvalidOperationException());
 
 

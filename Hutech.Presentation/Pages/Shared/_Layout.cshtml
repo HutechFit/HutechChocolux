@@ -12,19 +12,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/slick-theme.css"/>
+    <link rel="stylesheet" href="~/css/slick-theme.css"/>
     <link href="~/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="~/css/style.css" rel="stylesheet"/>
     <link href="~/css/responsive.css" rel="stylesheet"/>
 </head>
 
-<body class="@if (!ReferenceEquals(ViewData["Title"], "Homepage")) { <text>sub_page</text> }">
+<body class="@if (!ReferenceEquals(ViewData["Title"], "Homepage")) 
+             { <text>sub_page</text> }">
 
 <div class="main_body_content">
     <div class="hero_area">
         <header class="header_section">
             <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a asp-area=""
                        asp-page="/Index"
                        class="navbar-brand">
@@ -61,10 +62,8 @@
                                     Management
                                 </a>
                             </li>
-                        </ul>
-                        <div class="quote_btn-container">
                             <partial name="_LoginPartial"/>
-                        </div>
+                        </ul>
                     </div>
                 </nav>
             </div>
@@ -139,7 +138,7 @@
                                      alt="insta">
                             </div>
                             <p>
-                                Chocolate is a special gift for your loved ones
+                                Chocolate is a gift for your loved ones
                             </p>
                         </div>
                         <div class="insta_box">
@@ -210,7 +209,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
 <script src="~/js/custom.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script>
+$(document).ready(function () {
+    let url = window.location;
+    $('ul.navbar-nav a:not(.btn)[href="' + url + '"]').parent().css('background-color', '#F4D35E');
+    $('ul.navbar-nav a:not(.btn)').filter(function () {
+        return this.href == url;
+    }).parent().css('background-color', '#F4D35E');
+});
+</script>
 @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

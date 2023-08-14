@@ -2,9 +2,7 @@
 @using Hutech.Infrastructure.Identity
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
@@ -13,7 +11,8 @@
            asp-area="Identity"
            asp-page="/Account/Manage/Index"
            title="Manage">
-            Hello @UserManager.GetUserName(User)!
+            <i class="fas fa-user-cog"></i>
+            Your Profile
         </a>
     </li>
     <li class="nav-item">
@@ -21,10 +20,12 @@
               class="form-inline" 
               asp-area="Identity" 
               asp-page="/Account/Logout" 
-              asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+              asp-route-returnUrl=
+              "@Url.Page("/Index", new { area = "" })">
             <button id="logout" 
                     type="submit" 
                     class="btn btn-outline-danger text-dark">
+                <i class="fas fa-sign-out-alt"></i>
                 Logout
             </button>
         </form>
@@ -37,8 +38,8 @@ else
            id="login"
            asp-area="Identity"
            asp-page="/Account/Login">
+                <i class="fa-solid fa-user"></i>
             Login
         </a>
     </li>
 }
-</ul>
