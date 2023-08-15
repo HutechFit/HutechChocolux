@@ -12,7 +12,9 @@ public class LogoutModel : PageModel
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly ILogger<LogoutModel> _logger;
 
-    public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger)
+    public LogoutModel(
+        SignInManager<ApplicationUser> signInManager, 
+        ILogger<LogoutModel> logger)
         => (_signInManager, _logger) = (signInManager, logger);
 
     public async Task<IActionResult> OnPost(string? returnUrl = null)

@@ -14,7 +14,8 @@ public class ExternalLoginsModel : PageModel
     public ExternalLoginsModel(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager) 
-        => (_userManager, _signInManager) = (userManager, signInManager);
+        => (_userManager, _signInManager) 
+            = (userManager, signInManager);
 
     public IList<UserLoginInfo>? CurrentLogins { get; set; }
 
@@ -32,20 +33,28 @@ public class ExternalLoginsModel : PageModel
             return NotFound($"Unable to load user with ID 'user.Id'.");
 
         CurrentLogins = await _userManager.GetLoginsAsync(user);
-        OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
-            .Where(auth => CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
+        OtherLogins = (await _signInManager
+                .GetExternalAuthenticationSchemesAsync())
+            .Where(auth => CurrentLogins
+                .All(ul => auth.Name != ul.LoginProvider))
             .ToList();
-        ShowRemoveButton = user.PasswordHash is { } || CurrentLogins.Count > 1;
+        ShowRemoveButton = user.PasswordHash is { } 
+                           || CurrentLogins.Count > 1;
         return Page();
     }
 
-    public async Task<IActionResult> OnPostRemoveLoginAsync(string loginProvider, string providerKey)
+    public async Task<IActionResult> OnPostRemoveLoginAsync(
+        string loginProvider, string providerKey)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user is null)
-            return NotFound($"Unable to load user with ID 'user.Id'.");
+            return NotFound("Unable to load user with ID 'user.Id'.");
 
-        var result = await _userManager.RemoveLoginAsync(user, loginProvider, providerKey);
+        var result = await _userManager
+            .RemoveLoginAsync(
+                user, 
+                loginProvider, 
+                providerKey);
         if (!result.Succeeded)
         {
             StatusMessage = "The external login was not removed.";
@@ -59,9 +68,16 @@ public class ExternalLoginsModel : PageModel
 
     public async Task<IActionResult> OnPostLinkLoginAsync(string provider)
     {
-        await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-        var redirectUrl = Url.Page("./ExternalLogins", pageHandler: "LinkLoginCallback");
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, _userManager.GetUserId(User));
+        await HttpContext
+            .SignOutAsync(IdentityConstants.ExternalScheme);
+        var redirectUrl = Url.Page(
+            "./ExternalLogins", 
+            pageHandler: "LinkLoginCallback");
+        var properties = _signInManager
+            .ConfigureExternalAuthenticationProperties(
+                provider, 
+                redirectUrl, 
+                _userManager.GetUserId(User));
         return new ChallengeResult(provider, properties);
     }
 
@@ -69,11 +85,12 @@ public class ExternalLoginsModel : PageModel
     {
         var user = await _userManager.GetUserAsync(User);
         if (user is null)
-            return NotFound($"Unable to load user with ID 'user.Id'.");
+            return NotFound("Unable to load user with ID 'user.Id'.");
 
         var info = await _signInManager.GetExternalLoginInfoAsync(user.Id) 
                    ?? throw new InvalidOperationException(
-                $"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
+                $"Unexpected error occurred loading external login info for user with ID " +
+                $"'{user.Id}'.");
         var result = await _userManager.AddLoginAsync(user, info);
         if (!result.Succeeded)
         {

@@ -14,7 +14,8 @@ public class IndexModel : PageModel
     public IndexModel(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager)
-        => (_userManager, _signInManager) = (userManager, signInManager);
+        => (_userManager, _signInManager) 
+            = (userManager, signInManager);
 
     public string? Username { get; set; }
 
@@ -48,7 +49,8 @@ public class IndexModel : PageModel
     {
         var user = await _userManager.GetUserAsync(User);
         if (user is null)
-            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            return NotFound($"Unable to load user with ID" +
+                            $" '{_userManager.GetUserId(User)}'.");
 
         await LoadAsync(user);
         return Page();
@@ -58,7 +60,8 @@ public class IndexModel : PageModel
     {
         var user = await _userManager.GetUserAsync(User);
         if (user is null)
-            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            return NotFound($"Unable to load user with ID " +
+                            $"'{_userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)
         {
@@ -69,7 +72,8 @@ public class IndexModel : PageModel
         var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
         if (Input.PhoneNumber != phoneNumber)
         {
-            var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+            var setPhoneResult = await _userManager
+                .SetPhoneNumberAsync(user, Input.PhoneNumber);
             if (!setPhoneResult.Succeeded)
             {
                 StatusMessage = "Unexpected error when trying to set phone number.";

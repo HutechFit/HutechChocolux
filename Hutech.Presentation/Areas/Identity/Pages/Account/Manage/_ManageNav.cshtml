@@ -1,17 +1,22 @@
 ﻿@using Hutech.Infrastructure.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var hasExternalLogins = (await SignInManager
+        .GetExternalAuthenticationSchemesAsync())
+        .Any();
 }
+
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-        <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)"
+        <a class="nav-link 
+                  @ManageNavPages.IndexNavClass(ViewContext)"
            id="profile" asp-page="./Index">
             Profile
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" 
+        <a class="nav-link
+                  @ManageNavPages.ChangePasswordNavClass(ViewContext)" 
            id="change-password" 
            asp-page="./ChangePassword">
             Password
@@ -22,7 +27,8 @@
         <li id="external-logins"
             class="nav-item">
             <a id="external-login"
-               class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)"
+               class="nav-link 
+                      @ManageNavPages.ExternalLoginsNavClass(ViewContext)"
                asp-page="./ExternalLogins">
                 External logins
             </a>
